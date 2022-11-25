@@ -1,0 +1,16 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="form" #formDirective="ngForm" (ngSubmit)="getAnswer(form.get('question').value, formDirective)">
+      <mat-form-field>
+        <mat-label>Nova pergunta</mat-label>
+        <input matInput type="text" formControlName="question" required>
+        <mat-error *ngIf="form.get('question').invalid">Pergunta invalida</mat-error>
+      </mat-form-field><br>
+      <button type="submit" mat-raised-button color="primary">Enviar</button><br>
+    </form>
+    <div *ngIf="answerMessage !== ''" class="answer-box">
+      <p>{{ question }}</p>
+      <p>{{ answerMessage }}</p>
+    </div>
+  </mat-card-content>
+</mat-card>
