@@ -20,3 +20,12 @@ steps:
     npm install
     ng build
   displayName: 'npm install and build'
+- task: CopyFiles@2
+  inputs:
+    Contents: 'dist/magic-ball/**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'prodFiles'
+    publishLocation: 'Container'
