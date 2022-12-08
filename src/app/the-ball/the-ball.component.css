@@ -3,14 +3,27 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  overflow: hidden;
+  background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(126,126,126,1) 22%, rgba(0, 0, 0, 0) 25%);
+  position: relative;
+  z-index: 0;
 }
 
 .ball {
+  position: relative;
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 6.25rem 6.25rem, #414141, #000);
+  z-index: 10;
+}
+
+.ball-conteiner {
   aspect-ratio : 1 / 1;
+  position: relative;
   border-radius: 50%;
   max-width: 90%;
-  min-height: 80%;
-  background-color: #000;
+  min-height: 90%;
 }
 
 app-viewer {
@@ -20,4 +33,17 @@ app-viewer {
 
   width: 100%;
   height: 100%;
+}
+
+.ball-shadow {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+  border-radius: 50%;
+  filter: blur(3px);
+  width: 100%;
+  height: 20%;
+  background: rgba(0, 0, 0, 0.473);
+  transform: translate(0%, 170%);
+  z-index: 1;
 }

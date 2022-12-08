@@ -1,0 +1,20 @@
+<div class="conteiner">
+  <mat-card>
+    <mat-card-content>
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <form *ngIf="!isLoading" [formGroup]="form" #formDirective="ngForm" (ngSubmit)="logUser(form.get('username').value, form.get('password').value, formDirective)">
+        <mat-form-field>
+          <mat-label>Nome de Usuário</mat-label>
+          <input matInput type="text" formControlName="username" required>
+          <mat-error *ngIf="form.get('username').invalid">Nome de usuário obrigatório</mat-error>
+        </mat-form-field><br>
+        <mat-form-field>
+          <mat-label>Senha</mat-label>
+          <input matInput type="password" formControlName="password" required>
+          <mat-error *ngIf="form.get('password').invalid">Senha Obrigatória</mat-error>
+        </mat-form-field><br>
+        <button type="submit" mat-raised-button color="primary">Entrar</button><br>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

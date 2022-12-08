@@ -1,4 +1,5 @@
 export interface Answer {
-  id: number
+  id?: string
+  type: string
   message: string
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http'
 import { Answer } from 'src/app/answers/answer.model';
 import { isQuestionValidator } from './is-question.validator';
+import { AnswersService } from 'src/app/answers/answers.service';
 
 @Component({
   selector: 'app-viewer',
@@ -11,12 +11,14 @@ import { isQuestionValidator } from './is-question.validator';
 })
 export class ViewerComponent implements OnInit {
 
-  private answer:Answer = {id:null, message: ''};
+  private answer:Answer = {id:"", type: '', message: ''};
   form: FormGroup
   question = '';
   answerMessage = this.answer.message
+  isAnswer = false
+  isLoading = false
 
-  constructor(private http: HttpClient) { }
+  constructor(private service: AnswersService) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -31,18 +33,26 @@ export class ViewerComponent implements OnInit {
 
   getAnswer(question: string, formDirective: FormGroupDirective) {
     if (this.form.invalid) return;
+    this.isLoading = true
+    this.isAnswer = true
     if (question === "Quem é o seu criador?") {
+      this.isLoading = false
       this.answerMessage = "É o Victor Cruz"
       this.question = question
       return;
     }
-    const answer = this.http.get<Answer>('http://localhost:8080/answers/random').subscribe(res => {
+    this.question = question
+    this.service.getAnswer(question).subscribe(res => {
+      this.isLoading = false
       this.answer = res
-      this.answerMessage = this.answer.message
-      this.question = question
-    });
-    formDirective.resetForm()
-    this.form.reset()
+      this.answerMessage = res.message
+      formDirective.resetForm()
+      this.form.reset()
+    })
+  }
+
+  newQuestion() {
+    this.isAnswer = false
   }
 
 }

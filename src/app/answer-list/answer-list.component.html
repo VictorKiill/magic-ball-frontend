@@ -1,0 +1,19 @@
+<div class="conteiner">
+  <mat-card class="primary-card">
+    <mat-card-content class="carde">
+      <mat-spinner *ngIf="isLoading"></mat-spinner>
+      <mat-card *ngFor="let answer of answers" class="items">
+        <mat-card-content>
+          <h4>{{ answer.type }}</h4>
+          <p>{{ answer.message }}</p>
+        </mat-card-content>
+      </mat-card>
+      <mat-paginator [length]="totalAnswers"
+      [pageSize]="answersPerPage"
+      [pageSizeOptions]="answersPerPageOptions"
+      aria-label="Selecionar página"
+      (page)="onChangedPage($event)">
+      </mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>

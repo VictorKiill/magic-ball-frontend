@@ -1,3 +1,20 @@
 <mat-toolbar>
-  Bola Mágica
+  <a [routerLink]="['/']">
+    Bola Mágica
+  </a>
+  <div class="buttons">
+    <button mat-raised-button color="primary" [routerLink]="['/list']" routerLinkActive #list="routerLinkActive" [disabled]="list.isActive">
+      Listar respostas
+    </button>
+    <button mat-raised-button color="primary" [routerLink]="['/create']" routerLinkActive #create="routerLinkActive" [disabled]="create.isActive">
+      Criar resposta
+    </button>
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['/login']">Entrar</button>
+      <button mat-menu-item [routerLink]="['/signup']">Cadastrar</button>
+    </mat-menu>
+  </div>
 </mat-toolbar>
