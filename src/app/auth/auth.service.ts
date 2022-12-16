@@ -45,7 +45,6 @@ export class AuthService {
     this.setExpiresTimer(expiresIn)
     const now = new Date()
     const expirationDate = new Date(now.getTime() + expiresIn * 1000)
-    console.log(expirationDate)
     this.saveAuthData(username ,token, expirationDate)
   }
 
@@ -81,6 +80,7 @@ export class AuthService {
   private clearAuthData() {
     localStorage.removeItem("token")
     localStorage.removeItem("expiration")
+    localStorage.removeItem("username")
   }
 
   getAuthData() {
