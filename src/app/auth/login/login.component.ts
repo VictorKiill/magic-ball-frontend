@@ -34,7 +34,6 @@ export class LoginComponent implements OnInit {
       email: null,
       password
     }).subscribe(res => {
-      console.log(res)
       const token = res.token;
       const username = res.username
       this.isLoading = false
