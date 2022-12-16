@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { SuccessComponent } from 'src/app/success/success.component';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -12,7 +14,7 @@ export class SignupComponent implements OnInit {
   form: FormGroup
   isLoading = false
 
-  constructor(private service: AuthService) { }
+  constructor(private service: AuthService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.form = new FormGroup ({
@@ -36,14 +38,11 @@ export class SignupComponent implements OnInit {
       password
     }).subscribe(res => {
       this.isLoading = false
-      console.log(res)
+      this.dialog.open(SuccessComponent, {data: {message: "Usuario criado com sucesso!"}})
       formDirective.resetForm()
       this.form.reset()
     }, err => {
-      console.log(err)
       this.isLoading = false
-      formDirective.resetForm()
-      this.form.reset()
     })
   }
 

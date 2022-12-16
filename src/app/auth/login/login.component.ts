@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -12,7 +14,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup
   isLoading = false
 
-  constructor(private service: AuthService) { }
+  constructor(private service: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.form = new FormGroup ({
@@ -32,10 +34,15 @@ export class LoginComponent implements OnInit {
       email: null,
       password
     }).subscribe(res => {
+      const token = res.token;
+      const username = res.username
       this.isLoading = false
-      console.log(res)
-      formDirective.resetForm()
-      this.form.reset()
+      if(token) {
+        const expiresInDuration = +res.expiresIn
+        this.service.setLoginData(token, username, true, true, expiresInDuration)
+        this.router.navigate(['/'])
+      }
+
     }, (): void => {
       this.isLoading = false
       formDirective.resetForm()

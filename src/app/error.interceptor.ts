@@ -9,7 +9,7 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   constructor(private dialog: MatDialog) {}
 
-  errorMessages = {
+  private errorMessages = {
   "Username not found": "Nome de usuario não cadastrado",
   "Username and password not does not matches": "Senha incorreta",
   "Username already taken": "Nome de usuario já existe",
@@ -21,7 +21,11 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         let errorMessage = 'Um erro inesperado aconteceu!'
         if (error.error.message) {
-          errorMessage = this.errorMessages[error.error.message]
+          if (this.errorMessages[error.error.message]) {
+            errorMessage = this.errorMessages[error.error.message]
+          } else {
+            errorMessage = 'Um erro inesperado aconteceu!'
+          }
         }
 
         this.dialog.open(ErrorComponent, {data: {message: errorMessage}})

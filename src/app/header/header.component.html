@@ -1,20 +1,24 @@
 <mat-toolbar>
-  <a [routerLink]="['/']">
+  <a *ngIf="!userIsAuthenticaded" [routerLink]="['/']">
     Bola Mágica
   </a>
+  <a *ngIf="userIsAuthenticaded" [routerLink]="['/']">
+    Bola Mágica de {{ username.charAt(0).toUpperCase() + username.slice(1) }}
+  </a>
   <div class="buttons">
-    <button mat-raised-button color="primary" [routerLink]="['/list']" routerLinkActive #list="routerLinkActive" [disabled]="list.isActive">
+    <button *ngIf="userIsAuthenticaded" mat-raised-button color="primary" [routerLink]="['/list']" routerLinkActive #list="routerLinkActive" [disabled]="list.isActive">
       Listar respostas
     </button>
-    <button mat-raised-button color="primary" [routerLink]="['/create']" routerLinkActive #create="routerLinkActive" [disabled]="create.isActive">
+    <button *ngIf="userIsAuthenticaded" mat-raised-button color="primary" [routerLink]="['/create']" routerLinkActive #create="routerLinkActive" [disabled]="create.isActive">
       Criar resposta
     </button>
     <button mat-button [matMenuTriggerFor]="menu">
       <mat-icon aria-hidden="false" aria-label="Example home icon">menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item [routerLink]="['/login']">Entrar</button>
-      <button mat-menu-item [routerLink]="['/signup']">Cadastrar</button>
+      <button mat-menu-item *ngIf="!userIsAuthenticaded" [routerLink]="['/login']">Entrar</button>
+      <button mat-menu-item *ngIf="!userIsAuthenticaded" [routerLink]="['/signup']">Cadastrar</button>
+      <button mat-menu-item *ngIf="userIsAuthenticaded" (click)="onLogout()">Logout</button>
     </mat-menu>
   </div>
 </mat-toolbar>

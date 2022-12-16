@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Answer } from '../answers/answer.model';
 import { AnswersService } from '../answers/answers.service';
+import { SuccessComponent } from '../success/success.component';
 
 @Component({
   selector: 'app-answer-create',
@@ -21,7 +23,7 @@ export class AnswerCreateComponent implements OnInit {
     {value: "WHY", valueDisplay: "Por que"},
   ]
 
-  constructor(private service: AnswersService) { }
+  constructor(private service: AnswersService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.form = new FormGroup ({
@@ -39,6 +41,7 @@ export class AnswerCreateComponent implements OnInit {
       type: type,
       message: answerMessage
     }).subscribe(res => {
+      this.dialog.open(SuccessComponent, {data: {message: "Resposta criada com sucesso!"}})
       formDirective.resetForm()
       this.form.reset()
     })
